@@ -77,14 +77,18 @@ public class InterfazGrafica extends JFrame {
         tablaPedidos = new JTable(modeloTabla);
         tablaPedidos.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                                                           boolean isSelected, boolean hasFocus, int row, int column) {
                 Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                if (column == 3) {
-                    String tiempo = (String) value;
+
+                // Restaurar el color por defecto para todas las celdas
+                c.setForeground(table.getForeground());
+
+                // Cambiar a rojo solo la celda de tiempo restante si es menos de un minuto
+                if (column == 3 && value != null) {
+                    String tiempo = value.toString();
                     if (tiempo.startsWith("0:")) {
                         c.setForeground(Color.RED);
-                    } else {
-                        c.setForeground(Color.BLACK);
                     }
                 }
                 return c;
